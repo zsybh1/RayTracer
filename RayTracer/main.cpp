@@ -1,9 +1,9 @@
 #include <cfloat>
 #include <ctime>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <vector>
-#include <iomanip>
 
 #include <camera.h>
 #include <hitable.h>
@@ -56,44 +56,19 @@ int main() {
                   vec3(0.0f, 1.0f, 0.0f), 45.0f, (float)width / height, 0.0f);
 
     HitableList world;
-    // for (int i = -11; i <= 11; ++i) {
-    //     for (int j = -11; j <= 11; ++j) {
-    //         vec3 pos =
-    //             vec3(i + 0.8 * getrand(seed), 0.2, j + 0.8 * getrand(seed));
-    //         float p = getrand(seed);
-    //         if (p < 0.8f) {
-    //             world.add(
-    //                 new Sphere(pos, 0.2f,
-    //                            new Lambertian(vec3(getrand(seed), getrand(seed),
-    //                                                getrand(seed)))));
-    //         } else if (p < 0.95f) {
-    //             world.add(new Sphere(
-    //                 pos, 0.2f,
-    //                 new Metal(vec3(getrand(seed), getrand(seed), getrand(seed)),
-    //                           getrand(seed) * getrand(seed))));
-    //         } else {
-    //             world.add(new Sphere(
-    //                 pos, 0.2f,
-    //                 new Transparency(getrand(seed),
-    //                                  vec3(0.8f + 0.2f * getrand(seed),
-    //                                       0.8f + 0.2f * getrand(seed),
-    //                                       0.8f + 0.2f * getrand(seed)))));
-    //         }
-    //     }
-    // }
     world.add(new Sphere(vec3(0.0f, -1000.0f, 0.0f), 1000.0f,
                          new Lambertian(vec3(0.4f, 0.4f, 0.4f))));
     world.add(new Sphere(vec3(0.0f, 1.0f, 0.0f), 1.0f,
                          new Lambertian(vec3(1.0f, 0.5f, 0.3f))));
     world.add(new Sphere(vec3(2.0f, 1.0f, 0.0f), 1.0f,
                          new Metal(vec3(0.8f, 0.9f, 1.0f), 0.5f)));
-    world.add(
-         new Sphere(vec3(-2.0f, 1.0f, 0.0f), 1.0f, new Transparency(1.5f)));
+    world.add(new Sphere(vec3(-2.0f, 1.0f, 0.0f), 1.0f,
+                         new Transparency(1.5f, vec3(0.8f, 0.8f, 0.8f))));
 
     clock_t lasttime = clock();
     int lastProgress = 0;
     std::cout << "0.0%..";
-    std::cout<< std::setiosflags(std::ios::fixed) << std::setprecision(1);
+    std::cout << std::setiosflags(std::ios::fixed) << std::setprecision(1);
     for (int j = height - 1; j >= 0; --j) {
         clock_t nowtime = clock();
         if (((nowtime - lasttime) / CLOCKS_PER_SEC) >= 1) {
@@ -124,6 +99,7 @@ int main() {
 
     clock_t endtime = clock();
     std::cout << "100%\nDone in ";
-    std::cout<< std::setiosflags(std::ios::fixed) << std::setprecision(3) << float(endtime - starttime) / CLOCKS_PER_SEC;
+    std::cout << std::setiosflags(std::ios::fixed) << std::setprecision(3)
+              << float(endtime - starttime) / CLOCKS_PER_SEC;
     std::cout << "s. Save as " << path << ".\n";
 }

@@ -1,4 +1,3 @@
-/.vscode
-/build
-/image
-
+/RayTracer/.vscode
+/RayTracer/build
+/RayTracer/image
