@@ -3,3 +3,5 @@
 跟着Peter Shirley的ray tracing三部曲写的程序
 
 final文件夹中保存已完工程序
+
+第二部开始使用stb_image和stb_image_write库
